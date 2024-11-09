@@ -1,0 +1,83 @@
+from tkinter import*
+
+# creating the main window
+window=Tk()
+window.title("Sum Calculator: ")
+window.geometry("800x200")
+
+ 
+def calculate():
+    try :
+        num1=float(entry1.get())
+        num2=float(entry2.get())
+    except valueError:
+        result_label.config(text="please enter valid number: ")
+        return 
+
+    
+    operation=operation_var.get()
+    if operation=="+":
+        result=num1+num2
+    elif operation=="-":
+        result=num1-num2
+    elif operation=="*":
+        result=num1*num2
+    elif operation=="/":
+        if num2==0:
+            result_label.config(text="Cannot devide by zero")
+            return
+        result=num1/num2
+    else:
+        result_label.config(text="please select an operation")
+        return
+
+    result_label.config(text=f"result: {result} ")
+
+# first number label and entry
+label1=Label(window,text="num 1: ")
+label1.grid(row=0,column=0,padx=10,pady=5)
+
+entry1=Entry(window)
+entry1.grid(row=0,column=1,padx=10,pady=5)
+
+
+#second number label and entry
+label2=Label(window,text="num 2: ")
+label2.grid(row=1,column=0,padx=10,pady=5)
+
+entry2=Entry(window)
+entry2.grid(row=1,column=1,padx=10,pady=5)
+
+# operation label and radio buttons
+operation_var=StringVar()
+operation_var.set("")
+
+label3=Label(window,text="operation: ")
+label3.grid(row=2,column=0,padx=10,pady=5)
+
+operations_frame=Frame(window)
+operations_frame.grid(row=2,column=1,padx=10,pady=5)
+
+radio_add=Radiobutton(operations_frame,text="+",variable=operation_var,value="+")
+radio_add.pack(side=LEFT)
+
+radio_subtract=Radiobutton(operations_frame,text="-",variable=operation_var,value="-")
+radio_subtract.pack(side=LEFT)
+
+radio_multiply=Radiobutton(operations_frame,text="*",variable=operation_var,value="*")
+radio_multiply.pack(side=LEFT)
+
+radio_devide=Radiobutton(operations_frame,text="/",variable=operation_var,value="/")
+radio_devide.pack(side=LEFT)
+
+
+# submit button
+submit_button=Button(window,text="calculate sum",command=calculate)
+submit_button.grid(row=3,column=0,columnspan=2,pady=10)
+
+
+# label to show the result
+result_label=Label(window,text="sum: ")
+result_label.grid(row=4,column=0,columnspan=2,pady=10)
+
+window.mainloop()
